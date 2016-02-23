@@ -39,11 +39,18 @@ var TcpPort = function(ip, options) {
     });
 
     this._client.on('connect', function() {
+        modbus.emit('connect');
         modbus.openFlag = true;
     });
 
     this._client.on('close', function(had_error) {
+        modbus.emit('close');
         modbus.openFlag = false;
+    });
+
+    this._client.on('error', function(error) {
+      // do nothing
+      //modbus.emit('customerror', error);
     });
 
     events.call(this);
