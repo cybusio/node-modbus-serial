@@ -48,10 +48,9 @@ var TcpPort = function(ip, options) {
         modbus.openFlag = false;
     });
 
-    this._client.on('error', function(error) {
-      // do nothing
-      //modbus.emit('customerror', error);
-    });
+    if(options.onError && typeof options.onError === 'function') {
+      this._client.on('error', options.onError)
+    }
 
     events.call(this);
 };
